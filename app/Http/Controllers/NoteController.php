@@ -21,6 +21,17 @@ class NoteController extends Controller
     {
         return view('notes.create'); // Show the form to create a note
     }
+    public function delete(){
+
+
+    }
+    public function destroy($id)
+    {
+        $note = Note::findOrFail($id); // Find the note by ID
+        $note->delete(); // Delete the note
+
+        return redirect()->route('notes.index')->with('success', 'Note deleted successfully');
+    }
 
     public function store(Request $request)
     {
@@ -30,7 +41,7 @@ class NoteController extends Controller
             'content' => 'required',
         ]);
 
-        Note::create($request->all());
+        $notes = Note::create($request->all());
         return redirect('/')->with('success', 'Note created successfully!');
     }
 }
